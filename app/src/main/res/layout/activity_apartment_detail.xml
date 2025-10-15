@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        tools:context=".ApartmentDetailActivity">
+
+        <ImageView
+            android:id="@+id/img_apartment"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_apartment_placeholder"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/apartment_image_description" />
+
+        <TextView
+            android:id="@+id/tv_apartment_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/img_apartment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_favorite"
+            android:layout_marginTop="16dp"
+            tools:text="Apartment Name" />
+
+        <TextView
+            android:id="@+id/tv_apartment_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_apartment_name"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="123 Example St, City, State" />
+
+        <ImageButton
+            android:id="@+id/btn_favorite"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_favorite_placeholder"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toTopOf="@id/tv_apartment_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="Add to favorites"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/et_review"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:hint="@string/review_hint"
+            android:gravity="top"
+            app:layout_constraintTop_toBottomOf="@id/tv_apartment_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp"
+            android:inputType="textMultiLine"
+            android:autofillHints="none" />
+
+        <TextView
+            android:id="@+id/tv_saved_review_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Saved Review:"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/et_review"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_saved_review_display"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_saved_review_label"
+            tools:text="This is a placeholder for a really great review that was saved." />
+
+        <Button
+            android:id="@+id/btn_back_to_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Back to List"
+            style="?attr/materialButtonOutlinedStyle"
+            app:layout_constraintTop_toBottomOf="@id/tv_saved_review_display"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_save_review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save_review_button"
+            app:layout_constraintTop_toBottomOf="@id/btn_back_to_list"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

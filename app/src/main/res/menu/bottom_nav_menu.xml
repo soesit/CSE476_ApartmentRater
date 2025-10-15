@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+        tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/nav_favorites"
+        android:icon="@drawable/ic_favorite_filled"
+        android:title="Favorites"
+        tools:ignore="HardcodedText" />
+</menu>
