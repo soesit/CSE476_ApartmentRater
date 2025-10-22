@@ -49,6 +49,10 @@ public class FavoritesActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
             }
+            else if ( item.getItemId() == R.id.nav_map) {
+                startActivity(new Intent(this, MapActivity.class));
+                return true;
+            }
             // If Favorites is clicked, do nothing since we are already here
             return false;
         });

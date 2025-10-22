@@ -10,4 +10,5 @@
     <string name="settings_title">Settings</string>
     <string name="settings_icon_description">Settings icon</string>
     <string name="notifications_switch">Enable Notifications</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
