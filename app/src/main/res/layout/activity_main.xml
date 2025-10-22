@@ -8,6 +8,31 @@
     android:padding="8dp"
     tools:context=".MainActivity">
 
+
+    <!-- Location Button -->
+    <Button
+        android:id="@+id/btn_get_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/location_button_label"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/location_button_label"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <!-- Location Text -->
+    <TextView
+        android:id="@+id/tv_location_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:visibility="gone"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="12dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
