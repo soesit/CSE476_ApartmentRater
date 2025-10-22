@@ -18,6 +18,7 @@ public class ApartmentDetailActivity extends AppCompatActivity {
     private EditText reviewEditText;
     private TextView savedReviewTextView;
     private String apartmentName;
+    private String apartmentAddress;
     private String reviewKey;
     private ImageButton favoriteButton;
     private Set<String> favorites;
@@ -28,7 +29,6 @@ public class ApartmentDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apartment_detail);
 
-        // Find all the views from the layout
         TextView apartmentNameTextView = findViewById(R.id.tv_apartment_name);
         TextView apartmentAddressTextView = findViewById(R.id.tv_apartment_address);
         reviewEditText = findViewById(R.id.et_review);
@@ -37,35 +37,22 @@ public class ApartmentDetailActivity extends AppCompatActivity {
         favoriteButton = findViewById(R.id.btn_favorite);
         Button backButton = findViewById(R.id.btn_back_to_list);
 
-        // Get apartment name and set up SharedPreferences
         apartmentName = getIntent().getStringExtra("APARTMENT_NAME");
+        apartmentAddress = getIntent().getStringExtra("APARTMENT_ADDRESS");
+
         apartmentNameTextView.setText(apartmentName);
+        apartmentAddressTextView.setText(apartmentAddress);
+
         prefs = getSharedPreferences("ApartmentRatingsPrefs", MODE_PRIVATE);
         reviewKey = "review_" + apartmentName;
 
-        // Load any previously saved review
         loadReview();
 
-       // Load the set of favorites
         favorites = new HashSet<>(prefs.getStringSet("favorites", new HashSet<>()));
         updateFavoriteButtonIcon();
 
-        // Set placeholder address
-        if ("Gaslight Village".equals(apartmentName)) {
-            apartmentAddressTextView.setText("123 Oak St, East Lansing, MI");
-        } else if ("Willoughby Estates".equals(apartmentName)) {
-            apartmentAddressTextView.setText("456 Willow Ln, East Lansing, MI");
-        } else {
-            apartmentAddressTextView.setText("789 Grand River Ave, East Lansing, MI");
-        }
-
-        // Set click listener for the save review button
         saveReviewButton.setOnClickListener(v -> saveReview());
-
-        // Set click listener for the favorite button
         favoriteButton.setOnClickListener(v -> toggleFavoriteStatus());
-
-        // Set click listener for the back button
         backButton.setOnClickListener(v -> finish());
     }
 
@@ -89,12 +76,10 @@ public class ApartmentDetailActivity extends AppCompatActivity {
         }
     }
 
-
     private void loadReview() {
         String savedReview = prefs.getString(reviewKey, "");
         savedReviewTextView.setText(savedReview);
     }
-
 
     private void saveReview() {
         SharedPreferences.Editor editor = prefs.edit();
