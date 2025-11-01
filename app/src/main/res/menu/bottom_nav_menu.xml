@@ -11,4 +11,8 @@
         android:icon="@drawable/ic_favorite_filled"
         android:title="Favorites"
         tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/nav_map"
+        android:icon="@drawable/ic_map"
+        android:title="Map" />
 </menu>

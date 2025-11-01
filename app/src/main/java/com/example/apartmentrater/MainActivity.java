@@ -69,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, FavoritesActivity.class));
                 return true;
             }
+            else if (item.getItemId() == R.id.nav_map) {
+                startActivity(new Intent(this, MapActivity.class));
+                return true;
+            }
             // If Home is clicked, do nothing since we are already here
             return false;
         });
