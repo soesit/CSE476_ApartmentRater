@@ -1,0 +1,13 @@
+# Python
+venv/
+__pycache__/
+
+# Android
+*.apk
+.gradle/
+build/
+.idea/
+local.properties
+
+# macOS
+.DS_Store
