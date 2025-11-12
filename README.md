@@ -42,12 +42,18 @@ The Android client communicates with a Django REST backend hosted on Google Clou
 - Authentication: Django Token Authentication
 
 ---
+## Notes for grader
+
+The provided `.apk` in this repository already includes the working key compiled at build time, so **Maps will load correctly** on the test device.
+
+You can look at the backend data through an admin site we made; user reviews are stored in postgres db and properly displayed through the site
 
 ## Admin Access
 - **URL:** http://136.115.50.113:8000/admin/
 - above is the GCP production server. 
 - **Username:** `admin`  
 - **Password:** `admin`
+- Click review section to see reviews
 
 ### Admin Features
 - View all Apartments and Reviews in database
