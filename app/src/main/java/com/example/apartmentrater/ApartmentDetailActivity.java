@@ -11,6 +11,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import java.util.HashMap;
+
 
 public class ApartmentDetailActivity extends AppCompatActivity {
 
@@ -26,6 +32,7 @@ public class ApartmentDetailActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apartment_detail);
 
@@ -89,5 +96,35 @@ public class ApartmentDetailActivity extends AppCompatActivity {
         savedReviewTextView.setText(reviewText);
         reviewEditText.setText("");
         Toast.makeText(this, "Review saved!", Toast.LENGTH_SHORT).show();
+
+        String apartmentId = getIntent().getStringExtra("placeId");
+
+
+        String token = "Token 3fd4df3cd2917a51144c81c9f3e8ded35b1ad677";  // your real token
+        String comment = reviewText.trim();
+
+        Map<String, String> body = new HashMap<>();
+        body.put("comment", comment);
+        body.put("name", apartmentName);
+
+        ApiService apiService = ApiClient.getService();
+        Call<Void> call = apiService.postReview(apartmentId, token, body);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(ApartmentDetailActivity.this, "Review uploaded to server!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ApartmentDetailActivity.this, "Server rejected: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(ApartmentDetailActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

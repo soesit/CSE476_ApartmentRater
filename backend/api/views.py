@@ -10,14 +10,14 @@ from .models import Apartment, Review, Profile
 from .serializers import ApartmentSerializer, ReviewSerializer, ProfileSerializer
 
 
-# --- Health Check ---
+#first test 
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def ping(request):
     return Response({"message": "pong!"})
 
 
-# --- Authentication Endpoints ---
+#auth endpoints
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
@@ -43,7 +43,7 @@ def obtain_token(request):
     return Response({'token': token.key})
 
 
-# --- Apartment Endpoints ---
+#apt endpoints
 @api_view(['GET', 'POST'])
 def apartments(request):
     if request.method == 'GET':
@@ -63,29 +63,34 @@ def apartments(request):
 @api_view(['GET'])
 def apartment_detail(request, place_id):
     try:
-        apt = Apartment.objects.get(pk=place_id)
+        apt = Apartment.objects.get(google_place_id=place_id)
+
     except Apartment.DoesNotExist:
         return Response({'detail': 'Not found'}, status=404)
     return Response(ApartmentSerializer(apt).data)
 
 
-# --- Reviews ---
+# reviews
 @api_view(['GET', 'POST'])
 def apartment_reviews(request, place_id):
-    try:
-        apt = Apartment.objects.get(pk=place_id)
-    except Apartment.DoesNotExist:
-        return Response({'detail': 'Apartment not found'}, status=404)
 
+    apt, _ = Apartment.objects.get_or_create(
+        google_place_id=place_id,
+        defaults={"name": place_id, "address": "Unknown Address"}
+    )
+
+    # get review
     if request.method == 'GET':
         qs = apt.reviews.select_related('user').order_by('-created_at')
         return Response(ReviewSerializer(qs, many=True).data)
 
-    # POST a review (auth required)
+    # post
     if not request.user.is_authenticated:
         return Response({'detail': 'Auth required'}, status=401)
+
     data = request.data.copy()
-    data['apartment'] = place_id
+    data['apartment'] = place_id  # ensure serializer knows which apartment
+
     ser = ReviewSerializer(data=data)
     if ser.is_valid():
         ser.save(user=request.user)
@@ -93,7 +98,7 @@ def apartment_reviews(request, place_id):
     return Response(ser.errors, status=400)
 
 
-# --- Profile ---
+# profile
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def profile_me(request):
@@ -106,7 +111,3 @@ def profile_me(request):
         return Response(ser.data)
     return Response(ser.errors, status=400)
 
-
-def apartment_list(request):
-    apartments = Apartment.objects.all().values()
-    return JsonResponse(list(apartments), safe=False)

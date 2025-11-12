@@ -38,8 +38,8 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Review for {self.apartment.name} by {self.user.username} ({self.rating} stars)'
-
+        return f"Review for {self.apartment.name} by {self.user.username}"
+       
 # NEW: A model to store extra information about a user.
 class Profile(models.Model):
     """

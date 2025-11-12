@@ -81,15 +81,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         checkLocationPermission();
 
         mMap.setOnMarkerClickListener(marker -> {
-            Place place = (Place) marker.getTag();
-            if (place != null) {
+            Object tag = marker.getTag();
+            if (tag != null) {
+                String placeId = tag.toString();
+                Log.d("MapActivity", "Clicked marker with Place ID: " + placeId);
+
                 Intent intent = new Intent(MapActivity.this, ApartmentDetailActivity.class);
-                intent.putExtra("APARTMENT_NAME", place.getName());
-                intent.putExtra("APARTMENT_ADDRESS", place.getAddress());
+                intent.putExtra("APARTMENT_NAME", marker.getTitle());
+                intent.putExtra("APARTMENT_ADDRESS", marker.getSnippet());
+                intent.putExtra("placeId", placeId);
+
                 startActivity(intent);
+            } else {
+                Log.e("MapActivity", "Marker tag (Place ID) is null!");
+                Toast.makeText(this, "Could not get apartment ID.", Toast.LENGTH_SHORT).show();
             }
             return false;
         });
+
+
     }
 
     private void checkLocationPermission() {
@@ -119,7 +129,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void findNearbyApartments() {
-        List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
+        List<Place.Field> placeFields = Arrays.asList(
+                Place.Field.ID,
+                Place.Field.NAME,
+                Place.Field.ADDRESS,
+                Place.Field.LAT_LNG
+        );
+
         FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -132,20 +148,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 for (com.google.android.libraries.places.api.model.PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
                     Place place = placeLikelihood.getPlace();
                     LatLng apartmentLocation = place.getLatLng();
-                    if (apartmentLocation != null) {
-                        Marker marker = mMap.addMarker(new MarkerOptions()
-                                .position(apartmentLocation)
-                                .title(place.getName()));
-                        if (marker != null) {
-                            marker.setTag(place);
-                        }
+
+                    // ✅ skip any place that doesn’t have an ID (Google sometimes hides them)
+                    if (apartmentLocation == null || place.getId() == null) {
+                        Log.w("MapActivity", "Skipping place with no ID: " + place.getName());
+                        continue;
+                    }
+
+                    Marker marker = mMap.addMarker(new MarkerOptions()
+                            .position(apartmentLocation)
+                            .title(place.getName())
+                            .snippet(place.getAddress()));
+
+                    if (marker != null) {
+                        marker.setTag(place.getId());
+                        Log.d("MapActivity", "Marker tagged with Place ID: " + place.getId());
                     }
                 }
             } else {
-                Log.e("MapActivity", "Exception: %s", task.getException());
+                Exception e = task.getException();
+                Log.e("MapActivity", "Exception fetching places", e);
             }
         });
     }
+
 
 
     private void setupBottomNavigation() {

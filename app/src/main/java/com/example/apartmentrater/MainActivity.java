@@ -52,11 +52,31 @@ public class MainActivity extends AppCompatActivity {
      */
     private void openDetails(String apartmentName) {
         Intent intent = new Intent(MainActivity.this, ApartmentDetailActivity.class);
-        // We use putExtra to send data along with the intent
+
+        // Send both apartment name and a unique fake placeId (for now)
         intent.putExtra("APARTMENT_NAME", apartmentName);
+
+        switch (apartmentName) {
+            case "Gaslight Village":
+                intent.putExtra("placeId", "gaslight_village_id");
+                intent.putExtra("address", "123 Main St, East Lansing, MI");
+                break;
+            case "Willoughby Estates":
+                intent.putExtra("placeId", "willoughby_estates_id");
+                intent.putExtra("address", "456 Oak Ave, Lansing, MI");
+                break;
+            case "Landmark Apartments":
+                intent.putExtra("placeId", "landmark_apartments_id");
+                intent.putExtra("address", "789 River Rd, Lansing, MI");
+                break;
+            default:
+                intent.putExtra("placeId", "unknown_apartment_id");
+                intent.putExtra("address", "Unknown Address");
+        }
 
         startActivity(intent);
     }
+
 
     private void setupBottomNavigation() {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
