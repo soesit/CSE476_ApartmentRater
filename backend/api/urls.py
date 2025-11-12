@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import ping
+from . import views
+
 
 urlpatterns = [
-    path('ping/', ping),
+    path('ping/', views.ping),
+    path('apartments/', views.apartment_list, name='apartment-list'),
 ]
-
