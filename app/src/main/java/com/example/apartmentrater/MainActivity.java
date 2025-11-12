@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private void openDetails(String apartmentName) {
         Intent intent = new Intent(MainActivity.this, ApartmentDetailActivity.class);
 
-        // Send both apartment name and a unique fake placeId (for now)
+        // Send both apartment name and placeid
         intent.putExtra("APARTMENT_NAME", apartmentName);
 
         switch (apartmentName) {

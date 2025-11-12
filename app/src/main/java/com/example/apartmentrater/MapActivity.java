@@ -149,7 +149,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     Place place = placeLikelihood.getPlace();
                     LatLng apartmentLocation = place.getLatLng();
 
-                    // ✅ skip any place that doesn’t have an ID (Google sometimes hides them)
+
                     if (apartmentLocation == null || place.getId() == null) {
                         Log.w("MapActivity", "Skipping place with no ID: " + place.getName());
                         continue;
