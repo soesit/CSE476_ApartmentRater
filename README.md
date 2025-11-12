@@ -44,7 +44,8 @@ The Android client communicates with a Django REST backend hosted on Google Clou
 ---
 
 ## Admin Access
-- **URL:** http://136.115.50.113:8000/admin/  
+- **URL:** http://136.115.50.113:8000/admin/
+- above is the GCP production server. 
 - **Username:** `admin`  
 - **Password:** `admin`
 
