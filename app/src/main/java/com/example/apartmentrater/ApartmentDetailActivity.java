@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import java.util.HashMap;
 
-
 public class ApartmentDetailActivity extends AppCompatActivity {
 
     private SharedPreferences prefs;
@@ -27,6 +27,7 @@ public class ApartmentDetailActivity extends AppCompatActivity {
     private String apartmentAddress;
     private String reviewKey;
     private ImageButton favoriteButton;
+    private ImageView apartmentImageView; // NEW
     private Set<String> favorites;
 
     @SuppressLint("SetTextI18n")
@@ -36,6 +37,7 @@ public class ApartmentDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apartment_detail);
 
+        apartmentImageView = findViewById(R.id.img_apartment_detail); // NEW
         TextView apartmentNameTextView = findViewById(R.id.tv_apartment_name);
         TextView apartmentAddressTextView = findViewById(R.id.tv_apartment_address);
         reviewEditText = findViewById(R.id.et_review);
@@ -49,6 +51,21 @@ public class ApartmentDetailActivity extends AppCompatActivity {
 
         apartmentNameTextView.setText(apartmentName);
         apartmentAddressTextView.setText(apartmentAddress);
+
+        // NEW: Set image based on apartment name
+        switch (apartmentName) {
+            case "Gaslight Village":
+                apartmentImageView.setImageResource(R.drawable.gaslight_village);
+                break;
+            case "Willoughby Estates":
+                apartmentImageView.setImageResource(R.drawable.willoughby_estates);
+                break;
+            case "Landmark Apartments":
+                apartmentImageView.setImageResource(R.drawable.landmark_apartments);
+                break;
+            default:
+                apartmentImageView.setImageResource(R.drawable.ic_apartment_placeholder);
+        }
 
         prefs = getSharedPreferences("ApartmentRatingsPrefs", MODE_PRIVATE);
         reviewKey = "review_" + apartmentName;
@@ -99,7 +116,6 @@ public class ApartmentDetailActivity extends AppCompatActivity {
 
         String apartmentId = getIntent().getStringExtra("placeId");
 
-
         String token = "Token 3fd4df3cd2917a51144c81c9f3e8ded35b1ad677";  // your real token
         String comment = reviewText.trim();
 
@@ -125,6 +141,5 @@ public class ApartmentDetailActivity extends AppCompatActivity {
                 Toast.makeText(ApartmentDetailActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }
