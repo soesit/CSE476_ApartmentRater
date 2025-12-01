@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Apartment Rater</string>
 
-    <string name="home_title">Apartments Rater</string>
+    <string name="home_title">Apartment Rater</string>
     <string name="save_review_button">Send Review</string>
 
     <string name="apartment_image_description">Photo of the apartment building</string>
